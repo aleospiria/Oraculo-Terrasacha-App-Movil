@@ -1,4 +1,3 @@
-// lib/screens/Consulta_screen.dart
 import 'package:flutter/material.dart';
 import 'package:oraculo_terrasacha/Modelos/ConsultaProyectoResponse.dart';
 import 'package:oraculo_terrasacha/servicios/Apis_terrasacha.dart';
@@ -16,7 +15,7 @@ class _ConsultaScreenState extends State<ConsultaScreen> {
   final TextEditingController _cedulaCatastralController = TextEditingController();
 
   // Variable para almacenar el resultado de la consulta
-  Future<ConsultaProyectoResponse>? _futureConsulta; // Ahora es nullable porque no se inicializa en initState
+  Future<ConsultaProyectoResponse>? _futureConsulta;
 
   // Variable para mostrar mensajes de error o éxito
   String _statusMessage = '';
@@ -24,14 +23,14 @@ class _ConsultaScreenState extends State<ConsultaScreen> {
   @override
   void initState() {
     super.initState();
-    // Puedes pre-llenar los campos con los valores de ejemplo si quieres
+    // se puede pre-llenar los campos con los valores de ejemplo
     _projectIDController.text = 'WAO-438b-78Y568';
     _cedulaCatastralController.text = '632720000000000010644000000000';
   }
 
   @override
+  //Función para liberar los controladores cuando el widget se destruye
   void dispose() {
-    // Es importante liberar los controladores cuando el widget se destruye
     _projectIDController.dispose();
     _cedulaCatastralController.dispose();
     super.dispose();
@@ -44,12 +43,10 @@ class _ConsultaScreenState extends State<ConsultaScreen> {
       _futureConsulta = ApiService.realizarConsultaProyecto(
         projectID: _projectIDController.text,
         cedulaCatastral: _cedulaCatastralController.text.isEmpty ? null : _cedulaCatastralController.text,
-        // Aquí se podría añadir más parámetros opcionales si hubieran inputs para ellos
-        // Ejemplo: imgAnteriorYearSelected: 2015,
       ) as Future<ConsultaProyectoResponse>?;
     });
 
-    // Manejar el resultado del Future para actualizar el mensaje de estado
+    // Manejar el resultado para actualizar el mensaje de estado
     _futureConsulta!.then((response) {
       setState(() {
         _statusMessage = 'Consulta exitosa: ${response.message}';
@@ -112,7 +109,6 @@ class _ConsultaScreenState extends State<ConsultaScreen> {
             const SizedBox(height: 24.0),
 
             // FutureBuilder para mostrar los resultados de la API
-            // Solo se muestra si _futureConsulta no es null
             _futureConsulta == null
                 ? const Text('Presiona "Realizar Consulta" para ver los resultados.')
                 : FutureBuilder<ConsultaProyectoResponse>(
@@ -131,7 +127,7 @@ class _ConsultaScreenState extends State<ConsultaScreen> {
                       Text('Mensaje: ${snapshot.data!.message}'),
                       Text('Project ID: ${snapshot.data!.projectID}'),
                       Text('Cédula Catastral: ${snapshot.data!.cedulaCatastral}'),
-                      Text('Fecha y Hora: ${snapshot.data!.fechaHoraConsulta.toLocal()}'),
+                        Text('Fecha y Hora: ${snapshot.data!.fechaHoraConsulta.toLocal()}'),
                     ],
                   );
                 } else {

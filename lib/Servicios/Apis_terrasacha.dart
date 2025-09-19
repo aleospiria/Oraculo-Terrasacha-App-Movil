@@ -1,5 +1,5 @@
-import 'package:http/http.dart' as http; // Importa el paquete http
-import 'package:oraculo_terrasacha/Modelos/ConsultaProyectoResponse.dart'; // Importa tu modelo de respuesta
+import 'package:http/http.dart' as http;
+import 'package:oraculo_terrasacha/Modelos/ConsultaProyectoResponse.dart';
 
 // Definimos un enum para los satélites para mayor seguridad de tipo
 enum Satellite {
@@ -8,7 +8,7 @@ enum Satellite {
   s2,
 }
 
-// Extensión para obtener el valor de string del enum
+// Extensión para obtener el string del enum
 extension SatelliteExtension on Satellite {
   String get value {
     switch (this) {
@@ -22,7 +22,7 @@ extension SatelliteExtension on Satellite {
   }
 }
 
-// Creamos una clase para el servicio de API
+//Servicio de API
 class ApiService {
   static Future<ConsultaProyectoResponse> realizarConsultaProyecto({
     required String projectID,
