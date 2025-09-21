@@ -108,14 +108,14 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _checkSession();
+    _verificarSesion();
   }
 
-  Future<void> _checkSession() async {
-    final authService = LoginCognitoServicio();
-    final isLoggedIn = await authService.isLoggedIn();
+  Future<void> _verificarSesion() async {
+    final ServicioAutent = LoginCognitoServicio();
+    final EstaConectado = await ServicioAutent.estaConectado();
     setState(() {
-      _initialScreen = isLoggedIn ? const HomeScreen() : const LoginScreen();
+      _initialScreen = EstaConectado ? const HomeScreen() : const LoginScreen();
     });
   }
 

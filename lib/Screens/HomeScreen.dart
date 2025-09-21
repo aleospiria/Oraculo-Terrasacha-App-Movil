@@ -2,6 +2,9 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:oraculo_terrasacha/Servicios/LoginCognitoServicio.dart';
 import 'package:oraculo_terrasacha/Screens/LoginScreen.dart';
+import 'package:oraculo_terrasacha/Screens/SeleccionRapidaImagenesScreen.dart';  // Agrega este import para la screen
+
+// TODO: Agrega imports para otras screens cuando las crees (ej. SeleccionManualScreen, etc.)
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,11 +15,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _userName = 'Usuario'; // Placeholder
-  String _selectedAnalisis = 'Opción 1'; // Placeholders para dropdowns
-  String _selectedColeccion = 'Opción 1';
-  String _selectedIoT = 'Opción 1';
-  String _selectedConstructor = 'Opción 1';
-  String _selectedConsultas = 'Opción 1';
+  String? _selectedAnalisis; // Inicial null para empezar con hint
+  String? _selectedColeccion;
+  String? _selectedIoT;
+  String? _selectedConstructor;
+  String? _selectedConsultas;
 
   @override
   void initState() {
@@ -67,12 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
               style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24.0),
-            // Dropdown 1: Analisis (opciones reales de ejemplo)
+            // Dropdown 1: Análisis
             DropdownButton<String>(
               value: _selectedAnalisis,
               isExpanded: true,
-              hint: const Text('Analisis'),
-              items: <String>['Análisis de suelo', 'Análisis de clima', 'Análisis de cultivo'].map((String value) {
+              hint: const Text('Análisis'),
+              items: <String>['Selección Rápida de Imágenes', 'Selección Manual de Imágenes', 'Análisis con Machine Learning'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -80,17 +83,35 @@ class _HomeScreenState extends State<HomeScreen> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _selectedAnalisis = newValue!;
+                  _selectedAnalisis = newValue;
                 });
+                if (newValue != null) {
+                  switch (newValue) {
+                    case 'Selección Rápida de Imágenes':
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SeleccionRapidaImagenesScreen()),
+                      );
+                      break;
+                    case 'Selección Manual de Imágenes':
+                    // TODO: Navega a SeleccionManualImagenesScreen
+                      debugPrint('$newValue seleccionado');
+                      break;
+                    case 'Análisis con Machine Learning':
+                    // TODO: Navega a AnalisisMLScreen
+                      debugPrint('$newValue seleccionado');
+                      break;
+                  }
+                }
               },
             ),
             const SizedBox(height: 16.0),
-            // Dropdown 2: Colección de arboles
+            // Dropdown 2: Colección de arboles (mantenido como dropdown, con placeholder item)
             DropdownButton<String>(
               value: _selectedColeccion,
               isExpanded: true,
               hint: const Text('Colección de arboles'),
-              items: <String>['Árboles nativos', 'Árboles frutales', 'Árboles ornamentales'].map((String value) {
+              items: <String>['Iniciar Colección'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -98,8 +119,12 @@ class _HomeScreenState extends State<HomeScreen> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _selectedColeccion = newValue!;
+                  _selectedColeccion = newValue;
                 });
+                if (newValue != null) {
+                  // TODO: Navega a screen de Colección de arboles
+                  debugPrint('$newValue seleccionado');
+                }
               },
             ),
             const SizedBox(height: 16.0),
@@ -108,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
               value: _selectedIoT,
               isExpanded: true,
               hint: const Text('IoT'),
-              items: <String>['Sensores de humedad', 'Sensores de temperatura', 'Dispositivos de riego'].map((String value) {
+              items: <String>['Conexión IoT', 'Dashboard IoT(BETA)'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -116,17 +141,21 @@ class _HomeScreenState extends State<HomeScreen> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _selectedIoT = newValue!;
+                  _selectedIoT = newValue;
                 });
+                if (newValue != null) {
+                  // TODO: Navega a screen correspondiente
+                  debugPrint('$newValue seleccionado');
+                }
               },
             ),
             const SizedBox(height: 16.0),
-            // Dropdown 4: Constructor de fórmulas
+            // Dropdown 4: Constructor de Formulas
             DropdownButton<String>(
               value: _selectedConstructor,
               isExpanded: true,
-              hint: const Text('Constructor de fórmulas'),
-              items: <String>['Fórmula básica', 'Fórmula avanzada', 'Fórmula personalizada'].map((String value) {
+              hint: const Text('Constructor de Formulas'),
+              items: <String>['Alométricas - Variables', 'Alométricas - Constructor', 'Alométricas - Biblioteca', 'Alométricas - Pruebas', 'Teledetección', 'Modelos ML', 'Biblioteca General'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -134,8 +163,12 @@ class _HomeScreenState extends State<HomeScreen> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _selectedConstructor = newValue!;
+                  _selectedConstructor = newValue;
                 });
+                if (newValue != null) {
+                  // TODO: Navega a screen correspondiente
+                  debugPrint('$newValue seleccionado');
+                }
               },
             ),
             const SizedBox(height: 16.0),
@@ -144,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
               value: _selectedConsultas,
               isExpanded: true,
               hint: const Text('Consultas'),
-              items: <String>['Consulta de datos históricos', 'Consulta de predicciones', 'Consulta de reportes'].map((String value) {
+              items: <String>['Imágenes Satelitales Exportadas', 'Consultas API', 'Historial de Consultas'].map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -152,8 +185,12 @@ class _HomeScreenState extends State<HomeScreen> {
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
-                  _selectedConsultas = newValue!;
+                  _selectedConsultas = newValue;
                 });
+                if (newValue != null) {
+                  // TODO: Navega a screen correspondiente
+                  debugPrint('$newValue seleccionado');
+                }
               },
             ),
             const Spacer(), // Para el footer

@@ -3,19 +3,19 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 
 class LoginCognitoServicio {
   // Verificar si hay sesión activa (para no hacer login siempre que se inicie la app)
-  Future<bool> isLoggedIn() async {
+  Future<bool> estaConectado() async {
     try {
-      final session = await Amplify.Auth.fetchAuthSession();
-      return session.isSignedIn;
+      final sesion = await Amplify.Auth.fetchAuthSession();
+      return sesion.isSignedIn;
     } catch (e) {
-      print('Error checking session: $e');
+      print('Error verificando sesion: $e');
       return false;
     }
   }
 
   // Login
   Future<AuthSession?> signIn(String username, String password) async {
-    print('Intentando signIn con username: $username');
+    print('Intentando iniciar con username: $username');
     try {
       final result = await Amplify.Auth.signIn(
         username: username,
